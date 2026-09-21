@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "torch-linalg-pinv-complex-grad-guard"
+version = "0.1.0"
+description = "Guards a real torch.compile correctness bug: AOTAutograd-based backends (aot_eager, inductor) compute a wrong gradient for torch.linalg.pinv and torch.linalg.matrix_sqrth on complex-dtype input (pytorch/pytorch#197084), while eager, torch.func.grad, and Dynamo-only compilation all agree with a numerically verified reference"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "zhuhroscar-tech" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov"]
+torch = ["torch>=2.0"]
+
+[project.scripts]
+torch-linalg-pinv-complex-grad-guard = "torch_linalg_pinv_complex_grad_guard.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
